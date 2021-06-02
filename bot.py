@@ -34,17 +34,17 @@ async def WEATtimer2(time2):
         for day in Ldays:
             if day['weather'].lower() in ['дождь', 'дожди', 'местами', 'rain', 'showers']:
                 if day['weather'].lower() == 'местами':
-                    SDays = f'{SDays}\n[&#127783;] > {name_days.get(day["title"])} - дождь |'
+                    SDays = f'{SDays}\n[&#127783;] > {name_days.get(day["title"].lower())} - дождь |'
                 else:
-                    SDays = f'{SDays}\n[&#127783;] > {name_days.get(day["title"])} - дождь |'
+                    SDays = f'{SDays}\n[&#127783;] > {name_days.get(day["title"].lower())} - дождь |'
             elif day["weather"].lower() in ['гроза', 'грозы', 'thunderstorm']:
-                SDays = f'{SDays}\n[&#127785;] > {name_days.get(day["title"])} - гроза |'
+                SDays = f'{SDays}\n[&#127785;] > {name_days.get(day["title"].lower())} - гроза |'
             elif day["weather"].lower() in ['ясно', 'clear']:
-                SDays = f'{SDays}\n[&#127780;] > {name_days.get(day["title"])} - ясно |'
+                SDays = f'{SDays}\n[&#127780;] > {name_days.get(day["title"].lower())} - ясно |'
             elif day["weather"].lower() in ['облачно', 'cloudy']:
-                SDays = f'{SDays}\n[&#127781;] > {name_days.get(day["title"])} - облачно |'
+                SDays = f'{SDays}\n[&#127781;] > {name_days.get(day["title"].lower())} - облачно |'
             elif day["weather"].lower() in ['переменная облачность', 'partially cloudy']:
-                SDays = f'{SDays}\n[&#9925;] > {name_days.get(day["title"])} - переменная облачность |'
+                SDays = f'{SDays}\n[&#9925;] > {name_days.get(day["title"].lower())} - переменная облачность |'
         #print(Ldays[0]['weather'].lower())
         if Ldays[0]["weather"].lower() in ['дождь', 'дожди', 'гроза', 'грозы', 'местами']:
             vkA.messages.send(user_id='487334215', message=f'Сегодня ожидаются дожди!\nПроверено в {str(datetime.timedelta(seconds=round(time.time()) + 10800)).split(" ")[2]}', random_id=0)
@@ -73,17 +73,17 @@ async def CHECK_WEATHER():
     for day in Ldays:
         if day['weather'].lower() in ['дождь', 'дожди', 'местами', 'rain', 'showers']:
             if day['weather'].lower() == 'местами':
-                SDays = f'{SDays}\n[&#127783;] > {name_days.get(day["title"])} - дождь |'
+                SDays = f'{SDays}\n[&#127783;] > {name_days.get(day["title"].lower())} - дождь |'
             else:
-                SDays = f'{SDays}\n[&#127783;] > {name_days.get(day["title"])} - дождь |'
+                SDays = f'{SDays}\n[&#127783;] > {name_days.get(day["title"].lower())} - дождь |'
         elif day["weather"].lower() in ['гроза', 'грозы', 'thunderstorm']:
-            SDays = f'{SDays}\n[&#127785;] > {name_days.get(day["title"])} - гроза |'
+            SDays = f'{SDays}\n[&#127785;] > {name_days.get(day["title"].lower())} - гроза |'
         elif day["weather"].lower() in ['ясно', 'clear']:
-            SDays = f'{SDays}\n[&#127780;] > {name_days.get(day["title"])} - ясно |'
+            SDays = f'{SDays}\n[&#127780;] > {name_days.get(day["title"].lower())} - ясно |'
         elif day["weather"].lower() in ['облачно', 'cloudy']:
-            SDays = f'{SDays}\n[&#127781;] > {name_days.get(day["title"])} - облачно |'
+            SDays = f'{SDays}\n[&#127781;] > {name_days.get(day["title"].lower())} - облачно |'
         elif day["weather"].lower() in ['переменная облачность', 'partially cloudy']:
-            SDays = f'{SDays}\n[&#9925;] > {name_days.get(day["title"])} - переменная облачность |'
+            SDays = f'{SDays}\n[&#9925;] > {name_days.get(day["title"].lower())} - переменная облачность |'
     return [Ldays, SDays]
 
 async def alarmclock(min=0, name='1', *args):
@@ -106,7 +106,7 @@ async def select_u(uid):
     db.execute(f'SELECT * FROM USERS WHERE "user_id" = "{uid}"')
     return db.fetchone()
 
-dbconn = sqlite3.connect('DATABASE.sql')
+dbconn = sqlite3.connect('database/DATABASE.sql')
 db = dbconn.cursor()
 
 vkconn = Bot(token='f2db190e74d543b75f710f9e33fb5986d92f1b3988d4e64747a3b2ff28396d2fafe9124de597d76b5e37b')
@@ -123,8 +123,8 @@ async def HANDLER(msg: Message):
                          '\n[&#127760;] > Погода - просмотр погоды')
         return
     elif msg.text.lower() == 'погода':
-        await msg.answer(f'[&#128467;] > Погода на оставшуюся неделю: {(await CHECK_WEATHER())[0]}'
-                         f'\n[&#128197;] > Погода сейчас: {(await CHECK_WEATHER())[1].split(" |")[0]}')
+        await msg.answer(f'[&#128467;] > Погода на оставшуюся неделю: {(await CHECK_WEATHER())[1]}'
+                         f'\n[&#128197;] > Погода сейчас: {(await CHECK_WEATHER())[1].split(" |")[0].split(" - ")[1]}')
         return
     else:
         await msg.answer(user_id=487334215, message='Напиши "помощь", я даун просто, не умею учиться.')
