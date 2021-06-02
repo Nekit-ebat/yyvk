@@ -34,7 +34,7 @@ async def WEATtimer2(time2):
         for day in Ldays:
             if day['weather'].lower() in ['дождь', 'дожди', 'местами', 'rain', 'showers']:
                 if day['weather'].lower() == 'местами':
-                    SDays = f'{SDays}\n[&#127783;] > {name_days.get(day["title"].lower())} - дождь |'
+                    SDays = f'{SDays}\n[&#127783;] > {name_days.get(day["title"].lower())} - местами дождь |'
                 else:
                     SDays = f'{SDays}\n[&#127783;] > {name_days.get(day["title"].lower())} - дождь |'
             elif day["weather"].lower() in ['гроза', 'грозы', 'thunderstorm']:
@@ -47,7 +47,17 @@ async def WEATtimer2(time2):
                 SDays = f'{SDays}\n[&#9925;] > {name_days.get(day["title"].lower())} - переменная облачность |'
         #print(Ldays[0]['weather'].lower())
         if Ldays[0]["weather"].lower() in ['дождь', 'дожди', 'гроза', 'грозы', 'местами', 'rain', 'showers']:
-            vkA.messages.send(user_id='487334215', message=f'Сегодня ожидаются дожди!\nПроверено в {str(datetime.timedelta(seconds=round(time.time()) + 10800)).split(" ")[2]}', random_id=0)
+            if (round(time.time()) - (await select_c(487334215))[1]) >= 10800:
+                vkA.messages.send(user_id='487334215', message=f'[&#128680;] > Сегодня ожидаются дожди!'
+                                                               f'\n[&#8986;] > Проверено в {str(datetime.timedelta(seconds=round(time.time()) + 10800)).split(" ")[2]}', random_id=0)
+                await update_c('send_WEAT', round(time.time()), 487334215)
+            else:
+                pass
+        else:
+            vkA.messages.send(user_id='487334215', message=f'[&#128680;] > Сегодня дожди не ожидаются!'
+                                                           f'\n[&#8986;] > Проверено в {str(datetime.timedelta(seconds=round(time.time()) + 10800)).split(" ")[2]}',
+                              random_id=0)
+            await update_c('send_WEAT', 0, 487334215)
         await asyncio.sleep(time2)
 
 async def CHECK_WEATHER():
@@ -106,6 +116,18 @@ async def select_u(uid):
     db.execute(f'SELECT * FROM USERS WHERE "user_id" = "{uid}"')
     return db.fetchone()
 
+async def update_c(col, val, key):
+    db.execute(f'UPDATE CHECKS SET "{col}" = "{val}" WHERE "user_id" = "{key}"')
+    dbconn.commit()
+
+async def insert_c(user_id):
+    db.execute(f'INSERT INTO CHECKS(user_id) VALUES({user_id})')
+    dbconn.commit()
+
+async def select_c(uid):
+    db.execute(f'SELECT * FROM CHECKS WHERE "user_id" = "{uid}"')
+    return db.fetchone()
+
 dbconn = sqlite3.connect('DATABASE.sql')
 db = dbconn.cursor()
 
@@ -118,6 +140,7 @@ vkA = vkA.get_api()
 async def HANDLER(msg: Message):
     if (await select_u(msg.from_id)) is None:
         await insert_u(msg.from_id)
+        await insert_c(msg.from_id)
     if msg.text.lower() in ['помощь', 'команды', 'меню']:
         await msg.answer('[&#128214;] > Что я умею:'
                          '\n[&#127760;] > Погода - просмотр погоды')
@@ -136,7 +159,7 @@ async def MAIN():
 lp = asyncio.get_event_loop()
 tasks = [
     lp.create_task(MAIN()),
-    lp.create_task(WEATtimer2(7200))
+    lp.create_task(WEATtimer2(300))
     #lp.create_task(alarmclock())
 ]
 while True:
