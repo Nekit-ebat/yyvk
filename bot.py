@@ -46,7 +46,7 @@ async def WEATtimer2(time2):
             elif day["weather"].lower() in ['переменная облачность', 'partially cloudy']:
                 SDays = f'{SDays}\n[&#9925;] > {name_days.get(day["title"].lower())} - переменная облачность |'
         #print(Ldays[0]['weather'].lower())
-        if Ldays[0]["weather"].lower() in ['дождь', 'дожди', 'гроза', 'грозы', 'местами']:
+        if Ldays[0]["weather"].lower() in ['дождь', 'дожди', 'гроза', 'грозы', 'местами', 'rain', 'showers']:
             vkA.messages.send(user_id='487334215', message=f'Сегодня ожидаются дожди!\nПроверено в {str(datetime.timedelta(seconds=round(time.time()) + 10800)).split(" ")[2]}', random_id=0)
         await asyncio.sleep(time2)
 
