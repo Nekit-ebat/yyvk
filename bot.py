@@ -106,7 +106,7 @@ async def select_u(uid):
     db.execute(f'SELECT * FROM USERS WHERE "user_id" = "{uid}"')
     return db.fetchone()
 
-dbconn = sqlite3.connect('database/DATABASE.sql')
+dbconn = sqlite3.connect('DATABASE.sql')
 db = dbconn.cursor()
 
 vkconn = Bot(token='f2db190e74d543b75f710f9e33fb5986d92f1b3988d4e64747a3b2ff28396d2fafe9124de597d76b5e37b')
