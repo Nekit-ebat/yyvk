@@ -124,7 +124,8 @@ async def HANDLER(msg: Message):
         return
     elif msg.text.lower() == 'погода':
         await msg.answer(f'[&#128467;] > Погода на оставшуюся неделю: {(await CHECK_WEATHER())[1]}'
-                         f'\n[&#128197;] > Погода сейчас: {(await CHECK_WEATHER())[1].split(" |")[0]}')
+                         f'\n[&#128197;] > Погода сейчас: {(await CHECK_WEATHER())[1].split(" |")[0]}'
+                         f'\n{(await CHECK_WEATHER())[1}')
         return
     else:
         await msg.answer(user_id=487334215, message='Напиши "помощь", я даун просто, не умею учиться.')
