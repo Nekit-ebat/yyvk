@@ -47,7 +47,7 @@ async def WEATtimer2(time2):
                 SDays = f'{SDays}\n[&#9925;] > {name_days.get(day["title"].lower())} - переменная облачность |'
         #print(Ldays[0]['weather'].lower())
         if Ldays[0]["weather"].lower() in ['дождь', 'дожди', 'гроза', 'грозы', 'местами', 'rain', 'showers']:
-            if (round(time.time()) - (await select_c(487334215))[1]) >= 10800:
+            if (round(time.time()) - (await select_c(487334215))[1]) >= 10:
                 vkA.messages.send(user_id='487334215', message=f'[&#128680;] > Сегодня ожидаются дожди!'
                                                                f'\n[&#8986;] > Проверено в {str(datetime.timedelta(seconds=round(time.time()) + 10800)).split(" ")[2]}', random_id=0)
                 await update_c('send_WEAT', round(time.time()), 487334215)
@@ -159,7 +159,7 @@ async def MAIN():
 lp = asyncio.get_event_loop()
 tasks = [
     lp.create_task(MAIN()),
-    lp.create_task(WEATtimer2(300))
+    lp.create_task(WEATtimer2(30))
     #lp.create_task(alarmclock())
 ]
 while True:
