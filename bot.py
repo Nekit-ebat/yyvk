@@ -47,7 +47,7 @@ async def WEATtimer2(time2):
                 SDays = f'{SDays}\n[&#9925;] > {name_days.get(day["title"].lower())} - переменная облачность |'
         #print(Ldays[0]['weather'].lower())
         if Ldays[0]["weather"].lower() in ['дождь', 'дожди', 'гроза', 'грозы', 'местами', 'rain', 'showers']:
-            if (round(time.time()) - (await select_c(487334215))[1]) >= 3600:
+            if (round(time.time()) - (await select_c(487334215))[1]) >= 10800:
                 vkA.messages.send(user_id='487334215', message=f'[&#128680;] > Сегодня ожидаются дожди!'
                                                                f'\n[&#8986;] > Проверено в {str(datetime.timedelta(seconds=round(time.time()) + 10800)).split(" ")[2]}', random_id=0)
                 await update_c('send_WEAT', round(time.time()), 487334215)
@@ -141,11 +141,11 @@ async def HANDLER(msg: Message):
     if (await select_u(msg.from_id)) is None:
         await insert_u(msg.from_id)
         await insert_c(msg.from_id)
-    if msg.text.lower() in ['помощь', 'команды', 'меню']:
+    if 'помощь' in msg.text.lower() or 'помош' in msg.text.lower() or 'команд' in msg.text.lower() or 'меню' in msg.text.lower():
         await msg.answer('[&#128214;] > Что я умею:'
                          '\n[&#127760;] > Погода - просмотр погоды')
         return
-    elif msg.text.lower() == 'погода':
+    elif 'погод' in msg.text.lower():
         await msg.answer(f'[&#128467;] > Погода на оставшуюся неделю: {(await CHECK_WEATHER())[1]}'
                          f'\n[&#128197;] > Погода сейчас: {(await CHECK_WEATHER())[1].split(" |")[0].split(" - ")[1]}')
         return
