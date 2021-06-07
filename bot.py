@@ -92,7 +92,7 @@ async def CHECK_WEATHER():
             SDays = f'{SDays}\n[&#127780;] > {name_days.get(day["title"].lower())} - ясно |'
         elif day["weather"].lower() in ['облачно', 'cloudy']:
             SDays = f'{SDays}\n[&#127781;] > {name_days.get(day["title"].lower())} - облачно |'
-        elif day["weather"].lower() in ['переменная облачность', 'partially cloudy']:
+        elif day["weather"].lower() in ['переменная облачность', 'partially cloudy', 'scattered']:
             SDays = f'{SDays}\n[&#9925;] > {name_days.get(day["title"].lower())} - переменная облачность |'
     return [Ldays, SDays]
 
