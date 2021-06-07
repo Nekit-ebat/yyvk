@@ -63,7 +63,7 @@ async def WEATtimer2(time2):
 async def CHECK_WEATHER():
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'}
-    q = requests.get('https://www.google.com/search?q=погода+калач+воронежская+область', headers=headers)
+    q = requests.get('https://www.google.com/search?q=%D0%BF%D0%BE%D0%B3%D0%BE%D0%B4%D0%B0+%D0%BA%D0%B0%D0%BB%D0%B0%D1%87+%D0%B2%D0%BE%D1%80%D0%BE%D0%BD%D0%B5%D0%B6%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C&oq=%D0%BF%D0%BE%D0%B3%D0%BE%D0%B4%D0%B0&aqs=chrome.0.35i39j69i57j35i39j0l2j0i131i433i457j0i402l2j0l2.1456j1j7&sourceid=chrome&ie=UTF-8', headers=headers)
     soup = BeautifulSoup(q.content, 'html.parser')
     items = soup.findAll("div", {"class": "R3Y3ec rr3bxd", 'class': 'wob_df'})
     Ldays = []
