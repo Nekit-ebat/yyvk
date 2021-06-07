@@ -146,7 +146,7 @@ async def HANDLER(msg: Message):
                          '\n[&#127760;] > Погода - просмотр погоды')
         return
     elif 'погод' in msg.text.lower():
-        await msg.answer(f'[&#128467;] > Погода на оставшуюся неделю: {(await CHECK_WEATHER())[0]}'
+        await msg.answer(f'[&#128467;] > Погода на оставшуюся неделю: {(await CHECK_WEATHER())[1]}'
                          f'\n[&#128197;] > Погода сейчас: {(await CHECK_WEATHER())[1].split(" |")[0].split(" - ")[1]}')
         return
     elif msg.text.lower() in ['крут', 'крутой', 'хорош', 'красава', 'красавчик', 'чотко', 'от души', 'по кайфу', 'умница', 'молодец',
